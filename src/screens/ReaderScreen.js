@@ -1,10 +1,15 @@
 import React,{useState,useEffect} from 'react';
-import { Text, View, StyleSheet,Image,TouchableOpacity} from 'react-native';
+import { Dimensions, Text, View, StyleSheet,Image,TouchableOpacity} from 'react-native';
 import dex from '../api/dex';
+const dimensions = Dimensions.get('window');
+const imageHeight = Math.round(dimensions.width * 9 / 16);
+const imageWidth = dimensions.width;
 function ReaderScreen({route,navigation}){
+   
+    
     const {id} = route.params;
-    console.log(id);
-    const [image, setImage] = useState('https://uploads.mangadex.org/covers/e7eabe96-aa17-476f-b431-2497d5e9d060/db8c8175-3d93-4808-b5f7-ca7a8f8d9e97.jpg')
+    let gif = 'https://www.uttf.com.ua/assets/images/loader2.gif';
+    const [image, setImage] = useState(gif);
     const [pages, setPages] = useState({});
     const [index, setIndex] = useState(0);
     const [chapter, setChapter] = useState([]);
@@ -13,11 +18,12 @@ function ReaderScreen({route,navigation}){
     function handleFetch(data){
         setPages(data);
         setChapter(data.chapter.data);
+        setImage(`${data.baseUrl}/data/${data.chapter.hash}/${data.chapter.data[0]}`);
     }
     const getPages = async () =>{
         try{
             const response = await dex.get(`./at-home/server/${id}`);
-            //console.log(response.data);
+            
             handleFetch(response.data)
             
         }catch(err){
@@ -29,15 +35,12 @@ function ReaderScreen({route,navigation}){
     }, [])
     
     return(
-        <TouchableOpacity onPress={()=>{
+        <TouchableOpacity style={styles.button} onPress={()=>{
             
             if(chapter[index+1]){
-                //console.log('next');
             setIndex((index)=> index +1);
             setImage(`${pages.baseUrl}/data/${pages.chapter.hash}/${chapter[index]}`);
             }else{
-                //console.log('nope');
-                console.log(chapter);
                 return;
             }
         }}>
@@ -46,9 +49,13 @@ function ReaderScreen({route,navigation}){
     )
 }
 const styles = StyleSheet.create({
+    button:{
+        flex:1,
+        backgroundColor: 'black',
+    },
     image:{
-        width: 450,
-        height:750,
+        flex:1,
+        resizeMode:'contain',
     },
 })
 export default ReaderScreen

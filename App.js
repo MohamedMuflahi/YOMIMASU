@@ -12,7 +12,7 @@ import ReaderScreen from './src/screens/ReaderScreen';
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomeScreen} options={{title: 'YOMIMASU'}} />
           <Stack.Screen name="Detail" component={DetailScreen} options={{title: '', headerTransparent: true}}/>
-          <Stack.Screen name="Reader" component={ReaderScreen} options={{title: '', headerTransparent: true}}/>
+          <Stack.Screen name="Reader" component={ReaderScreen} options={{title: '', headerTransparent: true,  headerTintColor: 'white'}}/>
         </Stack.Navigator>
       </NavigationContainer>
     );
