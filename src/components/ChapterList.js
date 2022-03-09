@@ -12,28 +12,33 @@ function ChapterList({id, navigation}){
         })
         console.log(chapterID);
     }
-    function GETALLCHAPTERS(offset){
-        getChapterList(id,offset);
-    }
-    const getChapterList = async (id,offset) =>{
-        
-        try{
-            const response = await dex.get('./chapter',{
-                params:{
-                    manga: id,
-                    limit: 100,
-                    translatedLanguage: ['en'],
-                    offset,
-                }
-            })
-            console.log('fetching..');
-            setTotalChapters(response.data.total);
-            setChapters(response.data.data);
-        }catch(err){
+    const getChapterList = async (id)=>
+    {
+      try
+      {
+     fetch(
+          `https://api.mangadex.org/chapter?manga=${id}&limit=100&translatedLanguage[]=en`, 
+          {
+            headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+        }).then(response =>  response.json())
+        .then((data) => {
+            setTotalChapters(data.total);
+            setChapters(data.data);
+    }).catch((error) =>
+    {
+      console.error(error);
+    });
         }
-    }
+        catch (e)
+        {
+          console.error(e);
+        }
+      }
     useEffect(() => {
-        GETALLCHAPTERS(0);
+        getChapterList(id);
     }, [])
     
     return (

@@ -20,18 +20,45 @@ function ReaderScreen({route,navigation}){
         setChapter(data.chapter.data);
         setImage(`${data.baseUrl}/data/${data.chapter.hash}/${data.chapter.data[0]}`);
     }
-    const getPages = async () =>{
-        try{
-            const response = await dex.get(`./at-home/server/${id}`);
-            
-            handleFetch(response.data)
-            
-        }catch(err){
-            console.log('failed');
+    
+    const getPages = async (id)=>
+    {
+      try
+      {
+     fetch(
+          `https://api.mangadex.org/at-home/server/${id}`, 
+          {
+            headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+        }).then(response =>  response.json())
+        .then((data) => {
+            handleFetch(data)
+            console.log(id);
+            console.log(data.chapter.data)
+    }).catch((error) =>
+    {
+      console.error(error);
+    });
         }
-    };
+        catch (e)
+        {
+          console.error(e);
+        }
+      }
+    // const getPages = async () =>{
+    //     try{
+    //         const response = await dex.get(`./at-home/server/${id}`);
+            
+    //         handleFetch(response.data)
+            
+    //     }catch(err){
+    //         console.log('failed');
+    //     }
+    // };
     useEffect(() => {
-        getPages();
+        getPages(id);
     }, [])
     
     return(
