@@ -1,9 +1,7 @@
 import React,{useState,useEffect} from 'react';
-import { Dimensions, Text, View, StyleSheet,Image,TouchableOpacity} from 'react-native';
+import { Dimensions, Text, View, StyleSheet,Image,FlatList,ScrollView} from 'react-native';
 import dex from '../api/dex';
-const dimensions = Dimensions.get('window');
-const imageHeight = Math.round(dimensions.width * 9 / 16);
-const imageWidth = dimensions.width;
+import Swiper from 'react-native-swiper'
 function ReaderScreen({route,navigation}){
    
     
@@ -17,8 +15,12 @@ function ReaderScreen({route,navigation}){
     console.log(image);
     function handleFetch(data){
         setPages(data);
+        // data.chapter.data.map((e)=>{
+        //     setChapter([...chapter,{url: e,name: e}])
+        // })
+        console.log(chapter);
         setChapter(data.chapter.data);
-        setImage(`${data.baseUrl}/data/${data.chapter.hash}/${data.chapter.data[0]}`);
+        //setImage(`${data.baseUrl}/data/${data.chapter.hash}/${data.chapter.data[0]}`);
     }
     
     const getPages = async (id)=>
@@ -26,53 +28,40 @@ function ReaderScreen({route,navigation}){
       try
       {
      fetch(
-          `https://api.mangadex.org/at-home/server/${id}`, 
-          {
+         `https://api.mangadex.org/at-home/server/${id}`, 
+         {
             headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-      },
+    },
         }).then(response =>  response.json())
         .then((data) => {
             handleFetch(data)
-            console.log(id);
-            console.log(data.chapter.data)
+           // console.log(id);
+            //console.log(data.chapter.data)
     }).catch((error) =>
     {
-      console.error(error);
+        console.error(error);
     });
         }
         catch (e)
         {
-          console.error(e);
-        }
-      }
-    // const getPages = async () =>{
-    //     try{
-    //         const response = await dex.get(`./at-home/server/${id}`);
-            
-    //         handleFetch(response.data)
-            
-    //     }catch(err){
-    //         console.log('failed');
-    //     }
-    // };
+            console.error(e);
+        }}
+    
     useEffect(() => {
         getPages(id);
     }, [])
     
     return(
-        <TouchableOpacity style={styles.button} onPress={()=>{
-            
-            if(chapter[index+1]){
-            setIndex((index)=> index +1);
-            setImage(`${pages.baseUrl}/data/${pages.chapter.hash}/${chapter[index]}`);
-            }else{
-                return;
-            }
-        }}>
-            <Image style={styles.image} source={{ uri: image}}/>
-        </TouchableOpacity>
+        <Swiper style={{backgroundColor: 'black',}} showsPagination={false} loop={false}>
+            {chapter.map((e)=>{
+                let url = `${pages.baseUrl}/data/${pages.chapter.hash}/${e}`;
+                 return (
+                     <Image key={e} style={styles.image} source={{ uri: url }} />
+                 ); 
+            })}
+        </Swiper>
     )
 }
 const styles = StyleSheet.create({
