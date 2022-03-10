@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from "react"; 
 import {Text,View,StyleSheet,TouchableOpacity,Image} from 'react-native'
-import dex from "../api/dex";
 function MangaCard({title,id,navigation,item}){
   const [image, setimage] = useState(
     `https://media1.giphy.com/media/KG4PMQ0jyimywxNt8i/giphy.gif?cid=ecf05e475bm09toekai6792479uc5e1z7q08wg0sgttcrna7&rid=giphy.gif&ct=g`

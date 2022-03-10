@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from "react";
 import {View, Text, StyleSheet,FlatList,Image,ScrollView} from 'react-native';
-import dex from '../api/dex';
 import MangaCard from "./MangaCard";
 function GenreList({navigation,genreId}){
     const [results, setResults] = useState([]);

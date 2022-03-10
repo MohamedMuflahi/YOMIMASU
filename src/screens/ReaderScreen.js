@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { Dimensions, Text, View, StyleSheet,Image,FlatList,ScrollView} from 'react-native';
-import dex from '../api/dex';
-import Swiper from 'react-native-swiper'
+import ImageSwiper from 'react-native-swiper'
 function ReaderScreen({route,navigation}){
    
     
@@ -54,14 +53,14 @@ function ReaderScreen({route,navigation}){
     }, [])
     
     return(
-        <Swiper style={{backgroundColor: 'black',}} showsPagination={false} loop={false}>
+        <ImageSwiper style={{backgroundColor: 'black',}} showsPagination={false} loop={false}>
             {chapter.map((e)=>{
                 let url = `${pages.baseUrl}/data/${pages.chapter.hash}/${e}`;
                  return (
                      <Image key={e} style={styles.image} source={{ uri: url }} />
                  ); 
             })}
-        </Swiper>
+        </ImageSwiper>
     )
 }
 const styles = StyleSheet.create({

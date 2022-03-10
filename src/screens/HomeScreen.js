@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react'; 
 import {View, Text, StyleSheet,FlatList,Image,ScrollView} from 'react-native';
-import { PickerItem } from 'react-native/Libraries/Components/Picker/Picker';
-import dex from '../api/dex';
+
 import GenreList from '../components/GenreList';
 import MangaCard from '../components/MangaCard';
 import SearchBar from '../components/SearchBar';

@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       marginLeft: 15,
       marginTop: 75,
-      width: 250,
+      width: 220,
   },
   cardView: {
     marginLeft: 20,

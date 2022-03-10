@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import ChapterCard from './ChapterCard';
-import dex from '../api/dex';
+
 
 function ChapterList({id, navigation}){
     const [totalChapters, setTotalChapters] = useState(0);
