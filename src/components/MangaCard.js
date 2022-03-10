@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react"; 
 import {Text,View,StyleSheet,TouchableOpacity,Image} from 'react-native'
-function MangaCard({title,id,navigation,item}){
+function MangaCard({title,id,navigation,item,user}){
   const [image, setimage] = useState(
     `https://media1.giphy.com/media/KG4PMQ0jyimywxNt8i/giphy.gif?cid=ecf05e475bm09toekai6792479uc5e1z7q08wg0sgttcrna7&rid=giphy.gif&ct=g`
   );
@@ -13,6 +13,7 @@ function MangaCard({title,id,navigation,item}){
       status: item.attributes.status,
       desc: item.attributes.description.en,
       id,
+      user,
     });
   }
   const getAuthor = async (id) => {

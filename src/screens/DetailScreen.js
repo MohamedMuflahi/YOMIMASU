@@ -1,16 +1,21 @@
 import React,{useState,useCallback} from "react";
-import {Text, View,StyleSheet,Image,ScrollView} from 'react-native';
+import {Text, View,StyleSheet,Image,ScrollView,TouchableOpacity} from 'react-native';
 import ChapterList from "../components/ChapterList";
+import { AntDesign } from '@expo/vector-icons'; 
 
 function DetailScreen({route,navigation}){
-    const {title,image,author,status,desc,id} = route.params;
+    const {title,image,author,status,desc,id,user} = route.params;
     
         const [textShown, setTextShown] = useState(false); //To show ur remaining Text
         const [lengthMore,setLengthMore] = useState(false); //to show the "Read more & Less Line"
+        const [isliked, setisliked] = useState(false);
         const toggleNumberOfLines = () => { //To toggle the show text or hide it
             setTextShown(!textShown);
         }
-        
+        function handleFav(){
+          // user
+          setisliked(!isliked);
+        }
         const onTextLayout = useCallback(e =>{
             setLengthMore(e.nativeEvent.lines.length >=4); //to check the text is more than 4 lines or not
             // console.log(e.nativeEvent);
@@ -23,6 +28,9 @@ function DetailScreen({route,navigation}){
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.author}>{author}</Text>
                 <Text style={styles.status}>{status}</Text>
+                <TouchableOpacity onPress={handleFav}>
+                  {isliked? <AntDesign name="heart" size={24} color="black" /> : <AntDesign name="hearto" size={24} color="black" />}
+                </TouchableOpacity>
             </View>
         </View>
         <View style={styles.mainContainer}>

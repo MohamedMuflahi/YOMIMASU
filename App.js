@@ -4,10 +4,12 @@ import { Button } from 'react-native';
 import HomeScreen from './src/screens/HomeScreen'; 
 import DetailScreen from './src/screens/DetailScreen';
 import LogInScreen from './src/screens/LogInScreen';
+import FavScreen from './src/screens/FavScreen';
 import ReaderScreen from './src/screens/ReaderScreen';
+import LoggedHome from './src/screens/LoggedHome';
+import React,{useState} from 'react';
 
   const Stack = createNativeStackNavigator();
-
   export default function App() {
     return (
       <NavigationContainer>
@@ -18,10 +20,11 @@ import ReaderScreen from './src/screens/ReaderScreen';
             options={({ navigation }) => ({
               title: "Yomimasu 読",
               headerTitleAlign: "center",
+              
               headerRight: () => (
                 <Button
                 onPress={() => navigation.navigate("Log")}
-                  title="Log in"
+                title="Log in"
                 />
               ),
             })}
@@ -43,7 +46,18 @@ import ReaderScreen from './src/screens/ReaderScreen';
           <Stack.Screen
             name="Log"
             component={LogInScreen}
-            options={{ title: "Log IN", headerTitleAlign: "center" }}
+            options={{ title: "Log in", headerTitleAlign: "center" }}
+          />
+          
+          <Stack.Screen
+            name="Fav"
+            component={FavScreen}
+            options={{ title: "Favorites", headerTitleAlign: "center" }}
+          />
+          <Stack.Screen
+            name="LoggedHome"
+            component={LoggedHome}
+            options={{ title: "Yomimasu 読", headerTitleAlign: "center" }}
           />
         </Stack.Navigator>
       </NavigationContainer>

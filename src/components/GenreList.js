@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import {View, Text, StyleSheet,FlatList,Image,ScrollView} from 'react-native';
 import MangaCard from "./MangaCard";
-function GenreList({navigation,genreId}){
+function GenreList({navigation,genreId,user}){
     const [results, setResults] = useState([]);
 const [errorMessage, setErrorMessage] = useState('');
 
@@ -66,6 +66,7 @@ const searchApi = async ()=>
               id={item.id}
               navigation={navigation}
               item={item}
+              user={user}
             ></MangaCard>
           );
         }}
