@@ -6,6 +6,7 @@ import DetailScreen from './src/screens/DetailScreen';
 import LogInScreen from './src/screens/LogInScreen';
 import FavScreen from './src/screens/FavScreen';
 import ReaderScreen from './src/screens/ReaderScreen';
+import SignUpScreen from './src/screens/SignUpScreen';
 import LoggedHome from './src/screens/LoggedHome';
 import React,{useState} from 'react';
 
@@ -14,20 +15,16 @@ import React,{useState} from 'react';
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={({ navigation }) => ({
-              title: "Yomimasu 読",
-              headerTitleAlign: "center",
-              
-              headerRight: () => (
-                <Button
-                onPress={() => navigation.navigate("Log")}
-                title="Log in"
-                />
-              ),
-            })}
+        
+        <Stack.Screen
+            name="Log"
+            component={LogInScreen}
+            options={{ title: "Log in", headerTitleAlign: "center" }}
+          />
+           <Stack.Screen
+            name="Sign"
+            component={SignUpScreen}
+            options={{ title: "Sign Up", headerTitleAlign: "center" }}
           />
           <Stack.Screen
             name="Detail"
@@ -44,12 +41,6 @@ import React,{useState} from 'react';
             }}
           />
           <Stack.Screen
-            name="Log"
-            component={LogInScreen}
-            options={{ title: "Log in", headerTitleAlign: "center" }}
-          />
-          
-          <Stack.Screen
             name="Fav"
             component={FavScreen}
             options={{ title: "Favorites", headerTitleAlign: "center" }}
@@ -58,6 +49,21 @@ import React,{useState} from 'react';
             name="LoggedHome"
             component={LoggedHome}
             options={{ title: "Yomimasu 読", headerTitleAlign: "center" }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={({ navigation }) => ({
+              title: "Yomimasu 読",
+              headerTitleAlign: "center",
+              
+              headerRight: () => (
+                <Button
+                onPress={() => navigation.navigate("Log")}
+                title="Log in"
+                />
+              ),
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>

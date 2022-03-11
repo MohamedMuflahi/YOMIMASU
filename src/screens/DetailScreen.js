@@ -1,5 +1,5 @@
-import React,{useState,useCallback} from "react";
-import {Text, View,StyleSheet,Image,ScrollView,TouchableOpacity} from 'react-native';
+import React,{useState,useCallback,useEffect} from "react";
+import {Text, View,StyleSheet,Image,ScrollView,TouchableOpacity, Button} from 'react-native';
 import ChapterList from "../components/ChapterList";
 import { AntDesign } from '@expo/vector-icons'; 
 
@@ -9,12 +9,43 @@ function DetailScreen({route,navigation}){
         const [textShown, setTextShown] = useState(false); //To show ur remaining Text
         const [lengthMore,setLengthMore] = useState(false); //to show the "Read more & Less Line"
         const [isliked, setisliked] = useState(false);
+        //console.log('USER', user);
         const toggleNumberOfLines = () => { //To toggle the show text or hide it
             setTextShown(!textShown);
         }
+        function handleGoToFav(){
+          navigation.navigate('Fav',{
+            user,
+          });
+        }
         function handleFav(){
-          // user
-          setisliked(!isliked);
+         if(isliked){
+           let x = user.fav.filter(e=> e !== user.id)
+          fetch('http://10.129.2.184:3000/users/' + user.id, {
+            method: 'PATCH',
+            body: JSON.stringify({
+              fav: [x],
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+         }else{
+          fetch('http://10.129.2.184:3000/users/' + user.id, {
+            method: 'PATCH',
+            body: JSON.stringify({
+              fav: [...user.fav,{title,image,author,status,desc,id}],
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+         }
+  setisliked(!isliked);
         }
         const onTextLayout = useCallback(e =>{
             setLengthMore(e.nativeEvent.lines.length >=4); //to check the text is more than 4 lines or not
@@ -30,6 +61,11 @@ function DetailScreen({route,navigation}){
                 <Text style={styles.status}>{status}</Text>
                 <TouchableOpacity onPress={handleFav}>
                   {isliked? <AntDesign name="heart" size={24} color="black" /> : <AntDesign name="hearto" size={24} color="black" />}
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleGoToFav}
+                title="Go to Favorites"
+                style={styles.ButtonStyle}>
+                  <Text style={styles.textStyle}>Go to Favorites</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -108,5 +144,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingBottom: 20,
   },
+  ButtonStyle:{
+        height: 30,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        marginTop: 25,
+        width: 150,
+        backgroundColor: '#007AFF',
+  },textStyle:{
+    color: 'white',
+    textAlign: 'center',
+    marginTop: 5,
+  }
 });
 export default DetailScreen;

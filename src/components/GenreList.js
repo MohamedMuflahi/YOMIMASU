@@ -1,9 +1,8 @@
 import React,{useState,useEffect} from "react";
 import {View, Text, StyleSheet,FlatList,Image,ScrollView} from 'react-native';
 import MangaCard from "./MangaCard";
-function GenreList({navigation,genreId,user}){
+function GenreList({navigation,genreId,user,genre}){
     const [results, setResults] = useState([]);
-const [errorMessage, setErrorMessage] = useState('');
 
     
 const searchApi = async ()=>
@@ -11,7 +10,7 @@ const searchApi = async ()=>
       try
       {
      fetch(
-          `https://api.mangadex.org/manga?includedTags[]=${genreId}&limit=15`, 
+          `https://api.mangadex.org/manga?includedTags[]=${genreId}&limit=15&contentRating[]=safe`, 
           {
             headers: {
         Accept: 'application/json',
@@ -19,8 +18,9 @@ const searchApi = async ()=>
       },
         }).then(response =>  response.json())
         .then((data) => {
-          setResults(data.data);
-                  setErrorMessage("");
+          const shuffledArray = data.data.sort((a, b) => 0.5 - Math.random());
+          setResults(shuffledArray);
+                 
     }).catch((error) =>
     {
       console.error(error);
@@ -52,7 +52,10 @@ const searchApi = async ()=>
     useEffect(() => {
         searchApi('')
       }, [])
+
     return (
+      <>
+      <Text style={styles.text}>{genre}</Text>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -71,6 +74,16 @@ const searchApi = async ()=>
           );
         }}
       />
+      </>
+
     );
 }
+const styles = StyleSheet.create({
+  text:{
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 20,
+    letterSpacing: 2,
+  },
+});
 export default GenreList;
