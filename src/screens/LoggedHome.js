@@ -54,12 +54,12 @@ function LoggedHome({navigation,route}){
         {isSearching? <Text style={{fontSize: 18, fontWeight: 'bold'}}>
         Search Results:
         </Text>: <>
-        <GenreList genreId={'ace04997-f6bd-436e-b261-779182193d3d'}navigation={navigation} genre={"Isekai"}></GenreList>
-        <GenreList genreId={'391b0423-d847-456f-aff0-8b0cfc03066b'}navigation={navigation} genre={"Adventure"}></GenreList>
-        <GenreList genreId={'87cc87cd-a395-47af-b27a-93258283bbc6'}navigation={navigation} genre={"Action"}></GenreList>
-        <GenreList genreId={'b9af3a63-f058-46de-a9a0-e0c13906197a'}navigation={navigation} genre={"Fantasy"}></GenreList>
-        <GenreList genreId={'ee968100-4191-4968-93d3-f82d72be7e46'}navigation={navigation} genre={"Horror"}></GenreList>
-        <GenreList genreId={'cdad7e68-1419-41dd-bdce-27753074a640'}navigation={navigation} genre={"Mystery"}></GenreList>
+        <GenreList genreId={'ace04997-f6bd-436e-b261-779182193d3d'}navigation={navigation} user={user} genre={"Isekai"}></GenreList>
+        <GenreList genreId={'391b0423-d847-456f-aff0-8b0cfc03066b'}navigation={navigation} user={user} genre={"Adventure"}></GenreList>
+        <GenreList genreId={'87cc87cd-a395-47af-b27a-93258283bbc6'}navigation={navigation} user={user} genre={"Action"}></GenreList>
+        <GenreList genreId={'b9af3a63-f058-46de-a9a0-e0c13906197a'}navigation={navigation} user={user} genre={"Fantasy"}></GenreList>
+        <GenreList genreId={'ee968100-4191-4968-93d3-f82d72be7e46'}navigation={navigation} user={user} genre={"Horror"}></GenreList>
+        <GenreList genreId={'cdad7e68-1419-41dd-bdce-27753074a640'}navigation={navigation} user={user} genre={"Mystery"}></GenreList>
         </>}
         
         {results.map(e=>{

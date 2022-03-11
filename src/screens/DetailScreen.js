@@ -33,6 +33,7 @@ function DetailScreen({route,navigation}){
             .then((response) => response.json())
             .then((json) => console.log(json));
          }else{
+           console.log(user);
           fetch('http://10.129.2.184:3000/users/' + user.id, {
             method: 'PATCH',
             body: JSON.stringify({
