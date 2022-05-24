@@ -1,37 +1,38 @@
 import React,{useState,useEffect} from 'react';
 import {View, Text, StyleSheet, TextInput,TouchableOpacity} from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'; 
+import { useSelector, useDispatch } from "react-redux";
+import { setValue } from "../redux/user";
+//  const dispatch = useDispatch();
+//   const currentUser = useSelector((state) => state.user.value);
+
  
 function LogInScreen({navigation}){
+    const dispatch = useDispatch();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [users, setUsers] = useState([]);
-    const [loggedIn, setloggedIn] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
    // console.log(username);
     //console.log(password);
-    const getUsers = async () => {
-        try {
-            fetch('http://10.129.2.184:3000/users',
-            {
-                headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              }
-            }
-            )
-            .then(resp=> resp.json())
-            .then(data=>{
-                //console.log(data);
-                setUsers(data);
-            })
-            .catch(err=>{
-                console.log(err);
-            })
-        } catch (e) {
-          console.error(e);
-        }
-      };
+    function handleLogin(){
+      fetch('https://young-basin-64523.herokuapp.com/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then(data =>{
+          if(data.user){
+            dispatch(setValue(data.user));
+            navigation.navigate('LoggedHome');
+          }
+        })
+    }
     function onUsernameChange(newTerm){
         setUsername(newTerm);
     }
@@ -39,33 +40,16 @@ function LogInScreen({navigation}){
         setPassword(newTerm);
     }
     function onSubmit(){
-       getUsers();
-       if(users.find(e=> e.username === username)){
-           console.log('correct username');
-           let pass = users.find((e)=> e.password === password)
-           if(pass){
-               
-               //console.log('logged in',pass);
-               setloggedIn(true);
-               setErrorMessage('');
-               navigation.navigate('LoggedHome',{
-                   user: pass,
-               });
-           }else{
-            console.log('Incorrect Password');
-            setErrorMessage('Incorrect Password!')
-           }
-       }else{
-           console.log('Incorrect Username');
-           setErrorMessage("Username Doesn't Exist Sign Up its Free!");
-       }
+      handleLogin();
+    //     user: pass,
+    // });
     }
     function onclickSignUp(){
         setErrorMessage('');
         navigation.navigate('Sign');
     }
     useEffect(() => {
-        getUsers();
+        // getUsers();
     }, [])
     
     return (

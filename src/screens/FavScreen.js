@@ -1,38 +1,17 @@
 import React,{useState,useEffect} from 'react';
 import {View, Text, StyleSheet, TextInput,TouchableOpacity,ScrollView} from 'react-native';
 import MangaLongCard from '../components/MangaLongCard';
+import { useSelector, useDispatch } from "react-redux";
+import { setValue } from "../redux/user";
 
-function FavScreen({navigation,route}){
+function FavScreen({navigation}){
+  
   const [favor, setFavor] = useState([])
-  console.log('THIS IWS ISIDJKDJNDKS<DNSK',favor);
-  const {user} = route.params;
+  const user = useSelector((state) => state.user.value);
+
     //const {title,image,author,status,desc,id} = user.fav;
-    const getUsers = async () => {
-      try {
-          fetch('http://10.129.2.184:3000/users',
-          {
-              headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            }
-          }
-          )
-          .then(resp=> resp.json())
-          .then(data=>{
-              //console.log(data);
-              let x = data.filter(e=> e.id == user.id);
-              console.log('X VALUE',x[0].fav);
-              setFavor(favor=> favor = x[0].fav);
-          })
-          .catch(err=>{
-              console.log(err);
-          })
-      } catch (e) {
-        console.error(e);
-      }
-    };
     useEffect(() => {
-      getUsers();
+      setFavor(user.favorites);
     }, [])
     
     return (

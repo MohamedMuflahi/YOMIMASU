@@ -1,7 +1,11 @@
 import React,{useState,useEffect} from "react";
 import {View, Text, StyleSheet,FlatList,Image,ScrollView} from 'react-native';
 import MangaCard from "./MangaCard";
-function GenreList({navigation,genreId,user,genre}){
+import { useSelector, useDispatch } from "react-redux";
+import { setValue } from "../redux/user";
+function GenreList({navigation,genreId,genre}){
+  const user = useSelector((state) => state.user.value);
+
     const [results, setResults] = useState([]);
 
     
@@ -31,24 +35,7 @@ const searchApi = async ()=>
           console.error(e);
         }
       }
-      
-    // const searchApi = async () =>{
-    //     try{
-    //         const response = await dex.get('./manga',{
-    //             params:{
-    //                 limit: 15,
-    //                 includedTags: [genreId],
-    //             }
-    //         })
-    //         setResults(response.data.data);
-    //         setErrorMessage('');
-    //         console.log('Fetched');
-    
-    //     }catch(err){
-    //       console.log(err);
-    //         setErrorMessage('Something went wrong, Check your connection');
-    //     }
-    // }
+   
     useEffect(() => {
         searchApi('')
       }, [])

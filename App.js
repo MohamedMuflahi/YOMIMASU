@@ -9,13 +9,14 @@ import ReaderScreen from './src/screens/ReaderScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import LoggedHome from './src/screens/LoggedHome';
 import React,{useState} from 'react';
-
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
   const Stack = createNativeStackNavigator();
   export default function App() {
     return (
+      <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-        
         <Stack.Screen
             name="Log"
             component={LogInScreen}
@@ -67,5 +68,6 @@ import React,{useState} from 'react';
           />
         </Stack.Navigator>
       </NavigationContainer>
+      </Provider>
     );
   }

@@ -14,7 +14,7 @@ function SearchBar({term,onTermChange,onTermSubmit}){
             autoCapitalize='none'
             autoCorrect={false}
             onEndEditing={()=> onTermSubmit()}
-            //onSubmitEditing={()=>onTermSubmit()}
+            onSubmitEditing={()=>onTermSubmit()}
             ></TextInput>
         </View>
     );

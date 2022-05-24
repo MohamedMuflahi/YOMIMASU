@@ -1,6 +1,10 @@
 import React,{useState,useEffect} from "react"; 
 import {Text,View,StyleSheet,TouchableOpacity,Image} from 'react-native'
-function MangaCard({title,id,navigation,item,user}){
+import { useSelector, useDispatch } from "react-redux";
+import { setValue } from "../redux/user";
+function MangaCard({title,id,navigation,item}){
+  const user = useSelector((state) => state.user.value);
+
   const [image, setimage] = useState(
     `https://media1.giphy.com/media/KG4PMQ0jyimywxNt8i/giphy.gif?cid=ecf05e475bm09toekai6792479uc5e1z7q08wg0sgttcrna7&rid=giphy.gif&ct=g`
   );

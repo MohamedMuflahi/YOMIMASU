@@ -2,9 +2,13 @@ import React,{useState,useCallback,useEffect} from "react";
 import {Text, View,StyleSheet,Image,ScrollView,TouchableOpacity, Button} from 'react-native';
 import ChapterList from "../components/ChapterList";
 import { AntDesign } from '@expo/vector-icons'; 
+import { useSelector, useDispatch } from "react-redux";
+import { setValue } from "../redux/user";
 
 function DetailScreen({route,navigation}){
-    const {title,image,author,status,desc,id,user} = route.params;
+    const {title,image,author,status,desc,id} = route.params;
+    const user = useSelector((state) => state.user.value);
+
     
         const [textShown, setTextShown] = useState(false); //To show ur remaining Text
         const [lengthMore,setLengthMore] = useState(false); //to show the "Read more & Less Line"
@@ -14,39 +18,46 @@ function DetailScreen({route,navigation}){
             setTextShown(!textShown);
         }
         function handleGoToFav(){
-          navigation.navigate('Fav',{
-            user,
-          });
+          navigation.navigate('Fav');
         }
         function handleFav(){
-         if(isliked){
-           let x = user.fav.filter(e=> e !== user.id)
-          fetch('http://10.129.2.184:3000/users/' + user.id, {
-            method: 'PATCH',
+          if(isliked){
+            fetch('https://young-basin-64523.herokuapp.com/remove', {
+            method: 'POST',
             body: JSON.stringify({
-              fav: [x],
+              manga_id:id,
+              user_id: user.id
             }),
             headers: {
               'Content-type': 'application/json; charset=UTF-8',
             },
           })
             .then((response) => response.json())
-            .then((json) => console.log(json));
-         }else{
-           console.log(user);
-          fetch('http://10.129.2.184:3000/users/' + user.id, {
-            method: 'PATCH',
+            .then(data =>{
+              
+            })
+          }else{
+            fetch('https://young-basin-64523.herokuapp.com/favor', {
+            method: 'POST',
             body: JSON.stringify({
-              fav: [...user.fav,{title,image,author,status,desc,id}],
+              title,
+              image,
+              author,
+              status,
+              desc,
+              manga_id:id,
+              user_id: user.id
             }),
             headers: {
               'Content-type': 'application/json; charset=UTF-8',
             },
           })
             .then((response) => response.json())
-            .then((json) => console.log(json));
-         }
-  setisliked(!isliked);
+            .then(data =>{
+              
+            })
+          }
+          setisliked(!isliked);
         }
         const onTextLayout = useCallback(e =>{
             setLengthMore(e.nativeEvent.lines.length >=4); //to check the text is more than 4 lines or not

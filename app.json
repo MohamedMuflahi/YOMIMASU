@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "manga-reader",
-    "slug": "manga-reader",
-    "version": "1.0.0",
+    "name": "Yomimasu",
+    "slug": "Yomimasu",
+    "version": "1.0.2",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/YomimasuLogo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/YomimasuLogoText.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,12 +21,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/YomimasuLogo.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.orangedevgames.mangareader"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/YomimasuLogo.png"
     },
     "description": ""
   }

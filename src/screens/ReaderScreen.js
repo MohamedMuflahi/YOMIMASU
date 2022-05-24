@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { Dimensions, Text, View, StyleSheet,Image,FlatList,ScrollView} from 'react-native';
 import Swiper from 'react-native-swiper/src';
+import { I18nManager } from 'react-native';
 function ReaderScreen({route,navigation}){
    
     
@@ -53,7 +54,7 @@ function ReaderScreen({route,navigation}){
     }, [])
     
     return(
-        <Swiper style={{backgroundColor: 'black',}} showsPagination={false} loop={false}>
+        <Swiper  style={{ backgroundColor: 'black' }} showsPagination={false} loop={false}>
             {chapter.map((e)=>{
                 let url = `${pages.baseUrl}/data/${pages.chapter.hash}/${e}`;
                  return (
